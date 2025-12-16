@@ -1,0 +1,311 @@
+% Predicting Patient Risk of Meeting SIRS DTTM within 24 Hours.
+% Austin Mishoe, Data Scientist, Medical University of South Carolina
+% October 16th, 2018
+
+
+```{python imports, echo=False, results=False}
+import pickle
+import pandas as pd
+import numpy as np
+from sklearn.metrics import f1_score,bidev_corrcoef
+from multiprocessing import cpu_count
+import pathos.pools as pp
+num_cores = cpu_count()
+import seaborn as sns
+import matplotlib.pyplot as plt
+import datetime
+from prettytable import PrettyTable
+pd.set_option('display.expand_frame_repr', False)
+```
+
+```{python data, echo=False}
+data = pd.read_pickle('data/raw_data.p')
+mgb = pickle.load(open('Hourly_Predictions_Bundle.p','rb'))
+data['REPORTING_DATE'] = pd.to_datetime(data['REPORTING_TIME'].dt.strftime('%Y-%m-%d'))
+data['REPORTING_WEEK'] = list(map(lambda x: x.isocalendar()[1],data['REPORTING_DATE']))
+
+
+key_col = 'PAT_ENC_CSN_ID'
+time_col = 'REPORTING_TIME'
+date_col = 'REPORTING_DATE'
+date_type = 'Day'
+# target_cols = ['MetSIRSdttm_8', 'MetSIRS4_4hr_24','MetSIRS4_4hr_48', 'MetMEWS4_8', 'MetMEWS4_24','MetMEWS4_48']
+# pred_cols = ['MetSIRS4_4hr_8_preds', 'MetSIRS4_4hr_24_preds', 'MetSIRS4_4hr_48_preds', 'MetMEWS4_8_preds', 'MetMEWS4_24_preds', 'MetMEWS4_48_preds']
+target_cols = ['SIRS_dttm']
+pred_cols = ['MetSIRSdttm_preds']
+sim_start_date = datetime.datetime(2018,5,1)
+sim_end_date = datetime.datetime(2018,7,31)
+target_col =target_cols[0]
+pred_col = pred_cols[0]
+
+# #['U4PC PEDIATRIC CARDIOVASCULAR ICU','C8PI PEDIATRIC ICU','A4CV CVICU','U4ST SURGICAL TRAUMA ICU','C8NN NEONATAL ICU', 'U6MI MICU', 'A3MS MSICU', 'U8NI NEURO SCIENCE ICU', 'U9NI 9TH FL NEURO ICU']
+icu_depts = [dept for dept in data['DepartmentName'].unique() if dept !=None and dept.lower().__contains__('icu')]
+
+
+## apply any filtering, in this case we already have the adult population -- we want to now filter out all icu hours
+# icu_times = np.where(data['DepartmentName'].isin(icu_depts))[0]
+# print('The percentage of ICU patient hours '+str(len(icu_times)/data.shape[0]))
+# data = data.iloc[np.where(data['DepartmentName'].isin(icu_depts)==False)[0],:].reset_index(drop=True)
+```
+
+
+## Introduction
+Systemic Inflammatory Response Syndrome(SIRS) is a life-threatening condition related to systemic inflammation, organ
+dysfunction, and organ failure. The consensus definition of severe sepsis in adults requires suspected or proven
+infection, organ failure, and signs that meet two or more criteria for the systemic inflammatory response syndrome (SIRS).
+SIRS criteria is listed below:
+
+##### <u>Adult SIRS Criteria</u>
+
+<ol style="margin-left: 20px;">
+  <li>Body Temperature < 36°C (96.8°F) or > 38°C (100.4°F)</li>
+  <li>Heart rate > 90 beats per minute</li>
+  <li>Respiratory rate > 20 breaths per minute</li>
+  <li>White blood cell count > 12,000/mm3 or <4,000/ mm3</li>
+</ol>
+
+## Objective to Predict Probability of Adult Patient at MUSC Meeting All of the SIRS Criteria Within A 4 Hour In The Next 24 Hours.
+The objective of this model is to flag patients who will meet all four of the SIRS criteria in a 4hour window within 24
+hours. This model will generate predictions <b>hourly</b> for all inpatients at MUSC.
+
+
+## Variables Considered
+The training data for the model was developed from the MUSC 'Hourly Labs and Vitals' pipeline which contains approximately
+75 labs and vitals information for each inpatient at MUSC. The labs and vitals used in this study were chosen based on
+frequency of occurrence. This dataset is grained at the patient-hour for all patients in the hospital.
+The following list of variables were used to build the model. Please refer to the model markdown for more information
+on model performance and the actual features that were used in the model.
+
+
+
+
+
+### Determining the Optimal Cutoff for Alerts
+The optimal cutoff is typically found by either doing cost analysis(if the cost of intervention is known) or by using an evaluation metric to balance the Sensitivity vs. Specificity.
+ Our team was not given the cost of False Positives/False negatives, so the optimal cutoff was found using the F1 score, harmonic mean of the sensitivity and specificity. 
+The optimal cutoff is found by maximizing each of these scores
+
+```{python opt cutoff, echo=False, evaluate=True, width=850}
+
+cutoffs = np.round(np.arange(.05,.26,.02),2)
+# optimal_f1_dict  = {}
+# optimal_mcc_dict = {}
+#
+# p = pp.ProcessPool(num_cores)
+# # cutoffs = np.arange(90,100,1)
+# cutoffs = np.round(np.arange(.01,.03,.04),2)
+# for target_ind in range(len(target_cols)):
+#     pred_col = pred_cols[target_ind]
+#     target_col = target_cols[target_ind]
+#     print(target_col)
+#     preds_binary_list = [1*(data[pred_col]>=cutoff).values for cutoff in cutoffs]
+#     true_binary_list = [data[target_col].values for cutoff in cutoffs]
+#     f1_scores = p.map(f1_score,true_binary_list,preds_binary_list)
+#     mcc_scores = p.map(bidev_corrcoef, true_binary_list, preds_binary_list)
+#     optimal_f1_dict[target_col]=cutoffs[f1_scores.index(max(f1_scores))]
+#     optimal_mcc_dict[target_col] = cutoffs[mcc_scores.index(max(mcc_scores))]
+#
+# print('Optimal Cutoff using F1 Score: '+str(optimal_f1_dict[target_col]))
+# print('Optimal Cutoff using MCC Score: '+str(optimal_mcc_dict[target_col]))
+
+
+opt_cutoff = .11
+```
+
+
+
+
+### Alert Results By Cutoff
+The following table shows the results of the model over various cutoff values on the entire MUSC inpatient population between
+May 1, 2018 and July 31,2018. This data was part of the holdout dataset, i.e. during the training phase, the model never saw this data.
+For the following analysis, all patients who met the SIRSdttm criteria were identified and the
+time of their first SIRSdttm instance was calculated. Using this information, we calculated whether the model would have
+alerted before, during/after, or entirely missed the patient using various cutoffs. The results over various cutoff values are shown below.
+```{python alerts_results, echo=False, evaluate=True, width=850}
+
+
+alert_results_table_columns = ['Total Patient Alerts Per '+date_type,'Non-ICU Patient Alerts Per '+date_type,'Proportion Alerts Prior','Proportion Alerts During/After','Proportion Alerts Missed','Average Alert Time Before Target(Hours)','Proportion Patient Wrong Alerts']
+alert_results_table = pd.DataFrame(np.zeros((len(cutoffs),len(alert_results_table_columns))),columns=alert_results_table_columns,index=cutoffs)
+alert_time_bins = pd.DataFrame(np.zeros((len(cutoffs),6)),columns=['>24 Hours','24-13 Hours','12-9 Hours','8-5 Hours','4-1 Hours','Alerted During/After'],index=cutoffs)
+
+
+for cutoff in cutoffs:
+    alerts_dict = {col: 0 for col in alert_results_table_columns}
+    data['preds_binary']= 1*(data[pred_col]>=cutoff).values
+    ppd_list = []
+    nonicu_ppd_list = []
+    for day in data['REPORTING_DATE'].unique():
+        tmp_data = data.iloc[np.where(data['REPORTING_DATE']==day)[0],:].reset_index(drop=True)
+        ppd_list.append(len(tmp_data.loc[np.where(tmp_data['preds_binary']==1)[0],'PAT_ENC_CSN_ID'].unique()))
+        nonicu_ppd_list.append(len(tmp_data.loc[np.where((tmp_data['preds_binary']==1) & (tmp_data['DepartmentName'].isin(icu_depts)==False))[0],'PAT_ENC_CSN_ID'].unique()))
+    alerts_dict['Total Patient Alerts Per '+date_type] = np.mean(ppd_list).round(2)
+    alerts_dict['Non-ICU Patient Alerts Per ' + date_type] = np.mean(nonicu_ppd_list).round(2)
+    unique_target_keys = data.loc[np.where(data[target_col].isna()==False)[0],key_col].unique()
+    unique_alert_keys = data.loc[np.where(data['preds_binary']==1)[0],key_col].unique()
+    for target_key in unique_target_keys:
+        first_target_time = data.loc[np.where(data[key_col]==target_key)[0],'SIRS_dttm'].unique()[0]
+        if datetime.datetime.utcfromtimestamp(first_target_time.tolist()/1e9)<datetime.datetime(2018,5,1):
+            continue
+        else:
+            alert_inds = np.where((data[key_col]==target_key) & (data['preds_binary']==1))[0]
+            if len(alert_inds)==0:
+                alerts_dict['Proportion Alerts Missed'] += 1
+            else:
+                first_alert_time = min(data.loc[alert_inds, time_col])
+                alert_diff = (first_alert_time.to_pydatetime() - datetime.datetime.utcfromtimestamp(first_target_time.tolist()/1e9)).seconds / 3600
+                if first_alert_time<first_target_time:
+                    alerts_dict['Proportion Alerts Prior']+=1
+                    if alert_diff<=4:
+                        alert_time_bins.loc[cutoff, '4-1 Hours'] += 1
+                    elif alert_diff<=8:
+                        alert_time_bins.loc[cutoff, '8-5 Hours'] += 1
+                    elif alert_diff<=12:
+                        alert_time_bins.loc[cutoff, '12-9 Hours'] += 1
+                    elif alert_diff <= 24:
+                        alert_time_bins.loc[cutoff, '24-13 Hours'] += 1
+                    else:
+                        alert_time_bins.loc[cutoff, '>24 Hours'] += 1
+                else:
+                    alerts_dict['Proportion Alerts During/After'] += 1
+                    alert_time_bins.loc[cutoff, 'Alerted During/After'] += 1
+
+                alerts_dict['Average Alert Time Before Target(Hours)'] += alert_diff
+    alerts_dict['Proportion Patient Wrong Alerts'] = len(
+        (set(unique_alert_keys) - set(unique_alert_keys).intersection(unique_target_keys))) / len(unique_alert_keys)
+    alerts_dict['Proportion Patient Wrong Alerts'] = len((set(unique_alert_keys) - set(unique_alert_keys).intersection(unique_target_keys)))/len(unique_alert_keys)
+    for col in ['Proportion Alerts Missed','Proportion Alerts Prior','Proportion Alerts During/After','Average Alert Time Before Target(Hours)']:
+        alert_results_table.loc[cutoff,col] = alerts_dict.get(col)/len(unique_target_keys)
+    for col in ['Non-ICU Patient Alerts Per '+date_type,'Total Patient Alerts Per '+date_type,'Proportion Patient Wrong Alerts']:
+        alert_results_table.loc[cutoff, col] = alerts_dict.get(col)
+
+
+
+alert_time_bins = alert_time_bins/len(unique_target_keys)
+
+alert_results_table = alert_results_table.round(2)
+alert_results_table.style.apply(lambda x: ['background: lightgreen' if x.name == opt_cutoff else '' for i in x],
+               axis=1)
+
+```
+
+### Breakdown of Alert Times for SIRSdttm Patients
+The following table further breaks down how many hours in advance this model would have fired for each of the SIRSdttm patients by cutoff.
+'Alerted During/After' is defined as the model either firing as soon as the patient met the SIRSdttm criteria or after. The '4-1 Hours' column
+gives the relative proportion of patients that would have been alerted on 1-4 hours prior to them meeting the SIRSdttm criteria. Each of
+the subsequent columns are defined similarly.
+
+```{python alerts_time_results, echo=False, evaluate=True, width=850}
+alert_time_bins = alert_time_bins.round(2)
+alert_time_bins.style.apply(lambda x: ['background: lightgreen' if x.name == opt_cutoff else '' for i in x],
+               axis=1)
+```
+
+
+
+
+
+```{python data, echo=False,width = 850}
+sepsis_data = pd.read_pickle('data/sepsis_patient_data.p')
+sepsis_keys = sepsis_data[key_col].unique()
+mort_sepsis_keys = sepsis_data.loc[np.where(sepsis_data['Death_Num']==1)[0],key_col].unique()
+```
+
+
+### Model Performance on Patients with Sepsis Primary DRG
+The next section applies this model specifically to the population of individuals that had sepsis during their stay.
+All 'PAT_ENC_CSN_ID' between July 1, 2014 and August 30,2018 that were found to have sepsis were included
+in the dataset. The number of patient visits with Sepsis as their primary diagnosis: 6802. The number of patient visits with Sepsis as their primary diagnosis
+who also passed away: 1469.
+
+The table below shows how the model would have performed by looking only at the population of septic patients. SIRSdttm, the exact time at which each septic individual
+met the sepsis SIRS criteria, is assumed to be time-zero for the sepsis infection(This time-zero was time was established by our analytics team). The following results
+display how the model would have performed at alerting before/after the earliest time that each individual met the sepsis SIRS criteria.
+
+The proportion of alert prior/after was calculated by looking the each sepsis patient's SIRSdttm
+ and determining what proportion of these patients would have been alerted on before their first SIRSdttm.
+
+```{python sepsis_cutoffs, echo=False, evaluate=True, width=850}
+alert_results_table_columns = ['Total Sepsis Primary DRGs','Number Sepsis Patients Alerted On','Total Deceased Sepsis Primary DRGs','Number Deceased Sepsis Patients Alerted On','Proportion Alerts Prior','Proportion Alerts During/After','Proportion Alerts Missed','Average Alert Time Before Target(Hours)','Proportion Sepsis Patients Missed']
+alert_results_table = pd.DataFrame(np.zeros((len(cutoffs),len(alert_results_table_columns))),columns=alert_results_table_columns,index=cutoffs)
+alert_time_bins = pd.DataFrame(np.zeros((len(cutoffs),6)),columns=['>24 Hours','24-13 Hours','12-9 Hours','8-5 Hours','4-1 Hours','Alerted After'],index=cutoffs)
+
+for cutoff in cutoffs:
+    alerts_dict = {col: 0 for col in alert_results_table_columns}
+    sepsis_data['preds_binary']= 1*(sepsis_data[pred_col]>=cutoff).values
+    alerts_dict['Total Sepsis Primary DRGs'] = len(sepsis_keys)
+    alerts_dict['Number Sepsis Patients Alerted On'] = len(sepsis_data.loc[np.where(sepsis_data['preds_binary']==1)[0],key_col].unique())
+    alerts_dict['Proportion Sepsis Patients Missed'] = (alerts_dict['Total Sepsis Primary DRGs'] - alerts_dict['Number Sepsis Patients Alerted On'])/alerts_dict['Total Sepsis Primary DRGs']
+    alerts_dict['Total Deceased Sepsis Primary DRGs'] = len(mort_sepsis_keys)
+    alerts_dict['Number Deceased Sepsis Patients Alerted On'] = len(sepsis_data.loc[np.where((sepsis_data['preds_binary'] == 1) & (sepsis_data['Death_Num']==1))[0], key_col].unique())
+    unique_target_keys = sepsis_data.loc[np.where(sepsis_data['SIRS_dttm'].isnull()==False)[0],key_col].unique()
+    unique_alert_keys = sepsis_data.loc[np.where(sepsis_data['preds_binary']==1)[0],key_col].unique()
+    for target_key in unique_target_keys:
+        first_target_time = sepsis_data.loc[np.where(sepsis_data[key_col] == target_key)[0], 'SIRS_dttm'].unique()[0]
+        alert_inds = np.where((sepsis_data[key_col]==target_key) & (sepsis_data['preds_binary']==1))[0]
+        if len(alert_inds)==0:
+            alerts_dict['Proportion Alerts Missed'] += 1
+        else:
+            first_alert_time = min(sepsis_data.loc[alert_inds, time_col])
+            alert_diff = (datetime.datetime.utcfromtimestamp(first_target_time.tolist() / 1e9) - first_alert_time.to_pydatetime()).total_seconds() / 3600
+            if first_alert_time<first_target_time:
+                alerts_dict['Proportion Alerts Prior']+=1
+                if alert_diff<=4:
+                    alert_time_bins.loc[cutoff, '4-1 Hours'] += 1
+                elif alert_diff<=8:
+                    alert_time_bins.loc[cutoff, '8-5 Hours'] += 1
+                elif alert_diff<=12:
+                    alert_time_bins.loc[cutoff, '12-9 Hours'] += 1
+                elif alert_diff <= 24:
+                    alert_time_bins.loc[cutoff, '24-13 Hours'] += 1
+                else:
+                    alert_time_bins.loc[cutoff, '>24 Hours'] += 1
+            else:
+                alerts_dict['Proportion Alerts During/After'] += 1
+                alert_time_bins.loc[cutoff, 'Alerted After'] += 1
+
+            alerts_dict['Average Alert Time Before Target(Hours)'] += alert_diff
+    # alerts_dict['Proportion Patient Wrong Alerts'] = len(
+    #     (set(unique_alert_keys) - set(unique_alert_keys).intersection(unique_target_keys))) / len(unique_alert_keys)
+    # alerts_dict['Proportion Patient Wrong Alerts'] = len((set(unique_alert_keys) - set(unique_alert_keys).intersection(unique_target_keys)))/len(unique_alert_keys)
+    for col in ['Proportion Alerts Missed','Proportion Alerts Prior','Proportion Alerts During/After','Average Alert Time Before Target(Hours)']:
+        alert_results_table.loc[cutoff,col] = alerts_dict.get(col)/len(unique_target_keys)
+    for col in ['Total Sepsis Primary DRGs','Number Sepsis Patients Alerted On','Total Deceased Sepsis Primary DRGs','Number Deceased Sepsis Patients Alerted On','Proportion Sepsis Patients Missed']:
+        alert_results_table.loc[cutoff, col] = alerts_dict.get(col)
+
+alert_results_table = alert_results_table.round(2)
+alert_results_table.style.apply(lambda x: ['background: lightgreen' if x.name == opt_cutoff else '' for i in x],
+               axis=1)
+```
+
+### Breakdown of Alert Times for SIRSdttm on Sepsis Patients
+The following table further breaks down how many hours in advance this model would have fired for each of the Sepsis, SIRSdttm patients by cutoff.
+'Alerted During/After' is defined as the model either firing as soon as the patient met the SIRSdttm criteria or after. The '4-1 Hours' column
+gives the relative proportion of patients that would have been alerted on 1-4 hours prior to them meeting the SIRSdttm criteria. Each of
+the subsequent columns are defined similarly.
+
+```{python alerts_time_results, echo=False, evaluate=True, width=850}
+alert_time_bins = alert_time_bins/len(unique_target_keys)
+alert_time_bins = alert_time_bins.round(2)
+alert_time_bins.style.apply(lambda x: ['background: lightgreen' if x.name == opt_cutoff else '' for i in x],
+               axis=1)
+```
+
+
+
+
+### Concluding Remarks
+
+<ol style="margin-left: 20px;">
+  <li>The cutoff used to trigger alerts can vary based on the number of resources at each department. This analysis was meant more to give a general overview of how the model performs on hour-to-hour basis for various departments, and the hospital as a whole.</li>
+  <li>A patient's risk score will be updated hourly. If any of their labs and vitals have changed, this will reflect in their subsequent risk score</li>
+  <li>Our model is able to provide patient specific insight as to why a given person has a high/low risk score. With an alert, we seek to provide the top 10 features that are attributed to a patient's high prediction</li>
+</ol>
+
+
+
+
+
+
+
+
+

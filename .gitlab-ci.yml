@@ -1,0 +1,17 @@
+UpdateREADME_CopyMarkdowns:
+  stage: deploy
+  before_script:
+    - export TARGET_DIR="/var/www/html/${CI_PROJECT_NAME}"
+  script:
+    - mkdir -p $TARGET_DIR
+    - find $TARGET_DIR -name "*.html" -type f -delete
+    - find . -name "*.html" -exec cp -t $TARGET_DIR {} +
+    - cat README.md | pandoc -f markdown_github > $TARGET_DIR/index.php
+    - cd $TARGET_DIR
+    - rename -f 's/^markdowns\_//' *
+    - | 
+      if [ -s index.php ]; then \
+      echo "<?php include_once(\$_SERVER['DOCUMENT_ROOT'].'/scripts/list_markdowns.php'); ?>" >> index.php; \
+      else \
+      awk -i inplace -v script_text="<?php include_once(\$_SERVER['DOCUMENT_ROOT'].'/scripts/list_markdowns.php'); ?>" 'NR==2{print script_text} 1' index.php; \
+      fi

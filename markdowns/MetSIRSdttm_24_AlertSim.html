@@ -1,0 +1,1262 @@
+
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/LaTeX", "output/HTML-CSS"],
+    "HTML-CSS": { availableFonts: ["TeX"] }
+    });
+</script>
+
+<script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<style>
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Raleway Light'), local('Raleway-Light'), url(http://fonts.gstatic.com/s/raleway/v9/-_Ctzj9b56b8RgXW8FArifk_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Raleway'), url(http://fonts.gstatic.com/s/raleway/v9/0dTEPzkLWceF7z0koJaX1A.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Raleway SemiBold'), local('Raleway-SemiBold'), url(http://fonts.gstatic.com/s/raleway/v9/xkvoNo9fC8O2RDydKj12b_k_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+}
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+
+
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; }
+}
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+html {
+  font-size: 62.5%; }
+body {
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222; }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+p {
+  margin-top: 0; }
+a {
+  color: #1EAEDB; }
+a:hover {
+  color: #0FA0CE; }
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+ul {
+  list-style: circle inside; }
+ol {
+  list-style: decimal inside; }
+ol, ul {
+  padding-left: 0;
+  margin-top: 0; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li {
+  margin-bottom: 1rem; }
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+button,
+.button {
+  margin-bottom: 1rem; }
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 1.5rem; }
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 2.5rem; }
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box; }
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box; }
+.u-pull-right {
+  float: right; }
+.u-pull-left {
+  float: left; }
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  border-top: 1px solid #E1E1E1; }
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 4px;
+}
+
+@media (min-width: 400px) {}
+@media (min-width: 550px) {}
+@media (min-width: 750px) {}
+@media (min-width: 1000px) {}
+@media (min-width: 1200px) {}
+
+</style>
+
+<style>
+.hll { background-color: #ffffcc }
+.c { color: #408080; font-style: italic } /* Comment */
+.err { border: 1px solid #FF0000 } /* Error */
+.k { color: #008000; font-weight: bold } /* Keyword */
+.o { color: #666666 } /* Operator */
+.ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.cp { color: #BC7A00 } /* Comment.Preproc */
+.cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.c1 { color: #408080; font-style: italic } /* Comment.Single */
+.cs { color: #408080; font-style: italic } /* Comment.Special */
+.gd { color: #A00000 } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.gr { color: #FF0000 } /* Generic.Error */
+.gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.gi { color: #00A000 } /* Generic.Inserted */
+.go { color: #888888 } /* Generic.Output */
+.gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.gs { font-weight: bold } /* Generic.Strong */
+.gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.gt { color: #0044DD } /* Generic.Traceback */
+.kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.kp { color: #008000 } /* Keyword.Pseudo */
+.kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.kt { color: #B00040 } /* Keyword.Type */
+.m { color: #666666 } /* Literal.Number */
+.s { color: #BA2121 } /* Literal.String */
+.na { color: #7D9029 } /* Name.Attribute */
+.nb { color: #008000 } /* Name.Builtin */
+.nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.no { color: #880000 } /* Name.Constant */
+.nd { color: #AA22FF } /* Name.Decorator */
+.ni { color: #999999; font-weight: bold } /* Name.Entity */
+.ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.nf { color: #0000FF } /* Name.Function */
+.nl { color: #A0A000 } /* Name.Label */
+.nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.nt { color: #008000; font-weight: bold } /* Name.Tag */
+.nv { color: #19177C } /* Name.Variable */
+.ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.w { color: #bbbbbb } /* Text.Whitespace */
+.mb { color: #666666 } /* Literal.Number.Bin */
+.mf { color: #666666 } /* Literal.Number.Float */
+.mh { color: #666666 } /* Literal.Number.Hex */
+.mi { color: #666666 } /* Literal.Number.Integer */
+.mo { color: #666666 } /* Literal.Number.Oct */
+.sa { color: #BA2121 } /* Literal.String.Affix */
+.sb { color: #BA2121 } /* Literal.String.Backtick */
+.sc { color: #BA2121 } /* Literal.String.Char */
+.dl { color: #BA2121 } /* Literal.String.Delimiter */
+.sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.s2 { color: #BA2121 } /* Literal.String.Double */
+.se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.sh { color: #BA2121 } /* Literal.String.Heredoc */
+.si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.sx { color: #008000 } /* Literal.String.Other */
+.sr { color: #BB6688 } /* Literal.String.Regex */
+.s1 { color: #BA2121 } /* Literal.String.Single */
+.ss { color: #19177C } /* Literal.String.Symbol */
+.bp { color: #008000 } /* Name.Builtin.Pseudo */
+.fm { color: #0000FF } /* Name.Function.Magic */
+.vc { color: #19177C } /* Name.Variable.Class */
+.vg { color: #19177C } /* Name.Variable.Global */
+.vi { color: #19177C } /* Name.Variable.Instance */
+.vm { color: #19177C } /* Name.Variable.Magic */
+.il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+
+
+
+
+
+<style>
+h1.title {margin-top : 20px}
+img {max-width : 100%}
+
+#From nbconvert
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+
+</HEAD>
+<BODY>
+    <div class ="container">
+        <div class = "row">
+            <div class = "col-md-12 twelve columns">
+<H1 class = "title"> Predicting Patient Risk of Meeting SIRS DTTM within 24 Hours.</H1>
+
+<p><strong>Author:</strong>  Austin Mishoe, Data Scientist, Medical University of South Carolina <BR/>
+<strong>Date:</strong>  October 16th, 2018 <BR/></p>
+
+
+
+
+<h2>Introduction</h2>
+<p>Systemic Inflammatory Response Syndrome(SIRS) is a life-threatening condition related to systemic inflammation, organ
+dysfunction, and organ failure. The consensus definition of severe sepsis in adults requires suspected or proven
+infection, organ failure, and signs that meet two or more criteria for the systemic inflammatory response syndrome (SIRS).
+SIRS criteria is listed below:</p>
+<h5><u>Adult SIRS Criteria</u></h5>
+<ol style="margin-left: 20px;">
+  <li>Body Temperature < 36°C (96.8°F) or > 38°C (100.4°F)</li>
+  <li>Heart rate > 90 beats per minute</li>
+  <li>Respiratory rate > 20 breaths per minute</li>
+  <li>White blood cell count > 12,000/mm3 or <4,000/ mm3</li>
+</ol>
+
+<h2>Objective to Flag Patient's 24 hours prior to them being diagnosed with Sepsis.</h2>
+<p>The objective of this model is to alert on Sepsis patients 24 hours prior to them first meeting the SIRS criteria, receiving sepsis antibiotics, receiving lactates, or receiving a bolus. This model will generate predictions <b>hourly</b> for all inpatients at MUSC.</p>
+<h2>Variables Considered</h2>
+<p>The training data for the model was developed from the MUSC 'Hourly Labs and Vitals' pipeline which contains approximately
+75 labs and vitals information for each inpatient at MUSC. The labs and vitals used in this study were chosen based on
+frequency of occurrence. This dataset is grained at the patient-hour for all patients in the hospital.
+The following list of variables were used to build the model. Please refer to the model markdown for more information
+on model performance and the actual features that were used in the model.</p>
+<h3>Determining the Optimal Cutoff for Alerts</h3>
+<p>The optimal cutoff is typically found by either doing cost analysis(if the cost of intervention is known) or by using an evaluation metric to balance the Sensitivity vs. Specificity.
+ Our team was not given the cost of False Positives/False negatives, so the optimal cutoff was found using the F1 score, harmonic mean of the sensitivity and specificity. 
+The optimal cutoff is found by maximizing each of these scores</p>
+
+<h3>Alert Results By Cutoff</h3>
+<p>The following table shows the results of the model over various cutoff values on the entire MUSC inpatient population between
+May 1, 2018 and July 31,2018. This data was part of the holdout dataset, i.e. during the training phase, the model never saw this data.
+For the following analysis, all patients who met the SIRSdttm criteria were identified and the
+time of their first SIRSdttm instance was calculated. Using this information, we calculated whether the model would have
+alerted before, during/after, or entirely missed the patient using various cutoffs. The results over various cutoff values are shown below.</p>
+
+<style  type="text/css" >
+    #T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col0 {
+            background:  lightgreen;
+        }    #T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col1 {
+            background:  lightgreen;
+        }    #T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col2 {
+            background:  lightgreen;
+        }    #T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col3 {
+            background:  lightgreen;
+        }    #T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col4 {
+            background:  lightgreen;
+        }    #T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col5 {
+            background:  lightgreen;
+        }    #T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col6 {
+            background:  lightgreen;
+        }</style>  
+<table id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074" > 
+<thead>    <tr> 
+        <th class="blank level0" ></th> 
+        <th class="col_heading level0 col0" >Total Patient Alerts Per Day</th> 
+        <th class="col_heading level0 col1" >Non-ICU Patient Alerts Per Day</th> 
+        <th class="col_heading level0 col2" >Proportion Alerts Prior</th> 
+        <th class="col_heading level0 col3" >Proportion Alerts During/After</th> 
+        <th class="col_heading level0 col4" >Proportion Alerts Missed</th> 
+        <th class="col_heading level0 col5" >Average Alert Time Before Target(Hours)</th> 
+        <th class="col_heading level0 col6" >Proportion Patient Wrong Alerts</th> 
+    </tr></thead> 
+<tbody>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row0" class="row_heading level0 row0" >0.05</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row0_col0" class="data row0 col0" >132.88</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row0_col1" class="data row0 col1" >108.83</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row0_col2" class="data row0 col2" >0.62</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row0_col3" class="data row0 col3" >0.23</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row0_col4" class="data row0 col4" >0.01</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row0_col5" class="data row0 col5" >11.34</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row0_col6" class="data row0 col6" >0.95</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row1" class="row_heading level0 row1" >0.07</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row1_col0" class="data row1 col0" >73.32</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row1_col1" class="data row1 col1" >56.73</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row1_col2" class="data row1 col2" >0.56</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row1_col3" class="data row1 col3" >0.27</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row1_col4" class="data row1 col4" >0.04</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row1_col5" class="data row1 col5" >10.6</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row1_col6" class="data row1 col6" >0.91</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row2" class="row_heading level0 row2" >0.09</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row2_col0" class="data row2 col0" >48.16</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row2_col1" class="data row2 col1" >36.39</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row2_col2" class="data row2 col2" >0.5</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row2_col3" class="data row2 col3" >0.3</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row2_col4" class="data row2 col4" >0.07</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row2_col5" class="data row2 col5" >9.87</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row2_col6" class="data row2 col6" >0.88</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row3" class="row_heading level0 row3" >0.11</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col0" class="data row3 col0" >34.75</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col1" class="data row3 col1" >25.62</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col2" class="data row3 col2" >0.46</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col3" class="data row3 col3" >0.31</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col4" class="data row3 col4" >0.1</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col5" class="data row3 col5" >9.06</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row3_col6" class="data row3 col6" >0.85</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row4" class="row_heading level0 row4" >0.13</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row4_col0" class="data row4 col0" >25.79</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row4_col1" class="data row4 col1" >18.65</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row4_col2" class="data row4 col2" >0.38</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row4_col3" class="data row4 col3" >0.34</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row4_col4" class="data row4 col4" >0.15</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row4_col5" class="data row4 col5" >7.58</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row4_col6" class="data row4 col6" >0.82</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row5" class="row_heading level0 row5" >0.15</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row5_col0" class="data row5 col0" >20.23</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row5_col1" class="data row5 col1" >14.42</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row5_col2" class="data row5 col2" >0.34</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row5_col3" class="data row5 col3" >0.33</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row5_col4" class="data row5 col4" >0.19</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row5_col5" class="data row5 col5" >7.05</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row5_col6" class="data row5 col6" >0.79</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row6" class="row_heading level0 row6" >0.17</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row6_col0" class="data row6 col0" >16.36</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row6_col1" class="data row6 col1" >11.48</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row6_col2" class="data row6 col2" >0.31</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row6_col3" class="data row6 col3" >0.32</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row6_col4" class="data row6 col4" >0.23</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row6_col5" class="data row6 col5" >6.42</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row6_col6" class="data row6 col6" >0.77</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row7" class="row_heading level0 row7" >0.19</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row7_col0" class="data row7 col0" >13.27</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row7_col1" class="data row7 col1" >9.15</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row7_col2" class="data row7 col2" >0.27</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row7_col3" class="data row7 col3" >0.34</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row7_col4" class="data row7 col4" >0.26</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row7_col5" class="data row7 col5" >5.74</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row7_col6" class="data row7 col6" >0.73</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row8" class="row_heading level0 row8" >0.21</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row8_col0" class="data row8 col0" >11.03</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row8_col1" class="data row8 col1" >7.52</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row8_col2" class="data row8 col2" >0.24</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row8_col3" class="data row8 col3" >0.35</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row8_col4" class="data row8 col4" >0.28</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row8_col5" class="data row8 col5" >5.46</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row8_col6" class="data row8 col6" >0.7</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row9" class="row_heading level0 row9" >0.23</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row9_col0" class="data row9 col0" >9.26</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row9_col1" class="data row9 col1" >6.39</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row9_col2" class="data row9 col2" >0.21</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row9_col3" class="data row9 col3" >0.34</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row9_col4" class="data row9 col4" >0.32</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row9_col5" class="data row9 col5" >4.8</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row9_col6" class="data row9 col6" >0.67</td> 
+    </tr>    <tr> 
+        <th id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074level0_row10" class="row_heading level0 row10" >0.25</th> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row10_col0" class="data row10 col0" >7.74</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row10_col1" class="data row10 col1" >5.27</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row10_col2" class="data row10 col2" >0.17</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row10_col3" class="data row10 col3" >0.34</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row10_col4" class="data row10 col4" >0.35</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row10_col5" class="data row10 col5" >4.23</td> 
+        <td id="T_14e5dba6_d7c5_11e8_9ce7_d89ef34a7074row10_col6" class="data row10 col6" >0.64</td> 
+    </tr></tbody> 
+</table> 
+<h3>Breakdown of Alert Times for SIRSdttm Patients</h3>
+<p>The following table further breaks down how many hours in advance this model would have fired for each of the SIRSdttm patients by cutoff.
+'Alerted During/After' is defined as the model either firing as soon as the patient met the SIRSdttm criteria or after. The '4-1 Hours' column
+gives the relative proportion of patients that would have been alerted on 1-4 hours prior to them meeting the SIRSdttm criteria. Each of
+the subsequent columns are defined similarly.</p>
+
+<style  type="text/css" >
+    #T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col0 {
+            background:  lightgreen;
+        }    #T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col1 {
+            background:  lightgreen;
+        }    #T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col2 {
+            background:  lightgreen;
+        }    #T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col3 {
+            background:  lightgreen;
+        }    #T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col4 {
+            background:  lightgreen;
+        }    #T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col5 {
+            background:  lightgreen;
+        }</style>  
+<table id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074" > 
+<thead>    <tr> 
+        <th class="blank level0" ></th> 
+        <th class="col_heading level0 col0" >>24 Hours</th> 
+        <th class="col_heading level0 col1" >24-13 Hours</th> 
+        <th class="col_heading level0 col2" >12-9 Hours</th> 
+        <th class="col_heading level0 col3" >8-5 Hours</th> 
+        <th class="col_heading level0 col4" >4-1 Hours</th> 
+        <th class="col_heading level0 col5" >Alerted During/After</th> 
+    </tr></thead> 
+<tbody>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row0" class="row_heading level0 row0" >0.05</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row0_col0" class="data row0 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row0_col1" class="data row0 col1" >0.48</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row0_col2" class="data row0 col2" >0.06</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row0_col3" class="data row0 col3" >0.04</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row0_col4" class="data row0 col4" >0.04</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row0_col5" class="data row0 col5" >0.23</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row1" class="row_heading level0 row1" >0.07</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row1_col0" class="data row1 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row1_col1" class="data row1 col1" >0.45</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row1_col2" class="data row1 col2" >0.06</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row1_col3" class="data row1 col3" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row1_col4" class="data row1 col4" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row1_col5" class="data row1 col5" >0.27</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row2" class="row_heading level0 row2" >0.09</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row2_col0" class="data row2 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row2_col1" class="data row2 col1" >0.41</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row2_col2" class="data row2 col2" >0.05</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row2_col3" class="data row2 col3" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row2_col4" class="data row2 col4" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row2_col5" class="data row2 col5" >0.3</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row3" class="row_heading level0 row3" >0.11</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col0" class="data row3 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col1" class="data row3 col1" >0.38</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col2" class="data row3 col2" >0.04</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col3" class="data row3 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col4" class="data row3 col4" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row3_col5" class="data row3 col5" >0.31</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row4" class="row_heading level0 row4" >0.13</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row4_col0" class="data row4 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row4_col1" class="data row4 col1" >0.29</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row4_col2" class="data row4 col2" >0.04</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row4_col3" class="data row4 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row4_col4" class="data row4 col4" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row4_col5" class="data row4 col5" >0.34</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row5" class="row_heading level0 row5" >0.15</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row5_col0" class="data row5 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row5_col1" class="data row5 col1" >0.28</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row5_col2" class="data row5 col2" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row5_col3" class="data row5 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row5_col4" class="data row5 col4" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row5_col5" class="data row5 col5" >0.33</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row6" class="row_heading level0 row6" >0.17</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row6_col0" class="data row6 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row6_col1" class="data row6 col1" >0.25</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row6_col2" class="data row6 col2" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row6_col3" class="data row6 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row6_col4" class="data row6 col4" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row6_col5" class="data row6 col5" >0.32</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row7" class="row_heading level0 row7" >0.19</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row7_col0" class="data row7 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row7_col1" class="data row7 col1" >0.22</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row7_col2" class="data row7 col2" >0.03</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row7_col3" class="data row7 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row7_col4" class="data row7 col4" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row7_col5" class="data row7 col5" >0.34</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row8" class="row_heading level0 row8" >0.21</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row8_col0" class="data row8 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row8_col1" class="data row8 col1" >0.2</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row8_col2" class="data row8 col2" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row8_col3" class="data row8 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row8_col4" class="data row8 col4" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row8_col5" class="data row8 col5" >0.35</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row9" class="row_heading level0 row9" >0.23</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row9_col0" class="data row9 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row9_col1" class="data row9 col1" >0.17</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row9_col2" class="data row9 col2" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row9_col3" class="data row9 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row9_col4" class="data row9 col4" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row9_col5" class="data row9 col5" >0.34</td> 
+    </tr>    <tr> 
+        <th id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074level0_row10" class="row_heading level0 row10" >0.25</th> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row10_col0" class="data row10 col0" >0</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row10_col1" class="data row10 col1" >0.14</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row10_col2" class="data row10 col2" >0.02</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row10_col3" class="data row10 col3" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row10_col4" class="data row10 col4" >0.01</td> 
+        <td id="T_14faafc8_d7c5_11e8_a047_d89ef34a7074row10_col5" class="data row10 col5" >0.34</td> 
+    </tr></tbody> 
+</table> 
+
+
+<h3>Model Performance on Patients with Sepsis Primary DRG</h3>
+<p>The next section applies this model specifically to the population of individuals that had sepsis during their stay.
+All 'PAT_ENC_CSN_ID' between July 1, 2014 and August 30,2018 that were found to have sepsis were included
+in the dataset. The number of patient visits with Sepsis as their primary diagnosis: 6802. The number of patient visits with Sepsis as their primary diagnosis
+who also passed away: 1469.</p>
+<p>The table below shows how the model would have performed by looking only at the population of septic patients. SIRSdttm, the exact time at which each septic individual
+met the sepsis SIRS criteria, is assumed to be time-zero for the sepsis infection(This time-zero was time was established by our analytics team). The following results
+display how the model would have performed at alerting before/after the earliest time that each individual met the sepsis SIRS criteria.</p>
+<p>The proportion of alert prior/after was calculated by looking the each sepsis patient's SIRSdttm
+ and determining what proportion of these patients would have been alerted on before their first SIRSdttm.</p>
+
+<style  type="text/css" >
+    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col0 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col1 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col2 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col3 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col4 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col5 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col6 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col7 {
+            background:  lightgreen;
+        }    #T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col8 {
+            background:  lightgreen;
+        }</style>  
+<table id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074" > 
+<thead>    <tr> 
+        <th class="blank level0" ></th> 
+        <th class="col_heading level0 col0" >Total Sepsis Primary DRGs</th> 
+        <th class="col_heading level0 col1" >Number Sepsis Patients Alerted On</th> 
+        <th class="col_heading level0 col2" >Total Deceased Sepsis Primary DRGs</th> 
+        <th class="col_heading level0 col3" >Number Deceased Sepsis Patients Alerted On</th> 
+        <th class="col_heading level0 col4" >Proportion Alerts Prior</th> 
+        <th class="col_heading level0 col5" >Proportion Alerts During/After</th> 
+        <th class="col_heading level0 col6" >Proportion Alerts Missed</th> 
+        <th class="col_heading level0 col7" >Average Alert Time Before Target(Hours)</th> 
+        <th class="col_heading level0 col8" >Proportion Sepsis Patients Missed</th> 
+    </tr></thead> 
+<tbody>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row0" class="row_heading level0 row0" >0.05</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col0" class="data row0 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col1" class="data row0 col1" >6609</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col2" class="data row0 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col3" class="data row0 col3" >1461</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col4" class="data row0 col4" >0.71</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col5" class="data row0 col5" >0.27</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col6" class="data row0 col6" >0.01</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col7" class="data row0 col7" >20.15</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row0_col8" class="data row0 col8" >0.03</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row1" class="row_heading level0 row1" >0.07</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col0" class="data row1 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col1" class="data row1 col1" >6366</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col2" class="data row1 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col3" class="data row1 col3" >1447</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col4" class="data row1 col4" >0.63</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col5" class="data row1 col5" >0.33</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col6" class="data row1 col6" >0.04</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col7" class="data row1 col7" >14.43</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row1_col8" class="data row1 col8" >0.06</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row2" class="row_heading level0 row2" >0.09</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col0" class="data row2 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col1" class="data row2 col1" >6057</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col2" class="data row2 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col3" class="data row2 col3" >1408</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col4" class="data row2 col4" >0.56</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col5" class="data row2 col5" >0.36</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col6" class="data row2 col6" >0.08</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col7" class="data row2 col7" >11.38</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row2_col8" class="data row2 col8" >0.11</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row3" class="row_heading level0 row3" >0.11</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col0" class="data row3 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col1" class="data row3 col1" >5737</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col2" class="data row3 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col3" class="data row3 col3" >1353</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col4" class="data row3 col4" >0.5</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col5" class="data row3 col5" >0.38</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col6" class="data row3 col6" >0.12</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col7" class="data row3 col7" >7.91</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row3_col8" class="data row3 col8" >0.16</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row4" class="row_heading level0 row4" >0.13</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col0" class="data row4 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col1" class="data row4 col1" >5400</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col2" class="data row4 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col3" class="data row4 col3" >1292</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col4" class="data row4 col4" >0.44</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col5" class="data row4 col5" >0.39</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col6" class="data row4 col6" >0.17</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col7" class="data row4 col7" >7.21</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row4_col8" class="data row4 col8" >0.21</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row5" class="row_heading level0 row5" >0.15</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col0" class="data row5 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col1" class="data row5 col1" >5034</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col2" class="data row5 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col3" class="data row5 col3" >1226</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col4" class="data row5 col4" >0.4</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col5" class="data row5 col5" >0.38</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col6" class="data row5 col6" >0.22</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col7" class="data row5 col7" >5.49</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row5_col8" class="data row5 col8" >0.26</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row6" class="row_heading level0 row6" >0.17</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col0" class="data row6 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col1" class="data row6 col1" >4715</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col2" class="data row6 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col3" class="data row6 col3" >1158</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col4" class="data row6 col4" >0.36</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col5" class="data row6 col5" >0.38</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col6" class="data row6 col6" >0.27</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col7" class="data row6 col7" >4.54</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row6_col8" class="data row6 col8" >0.31</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row7" class="row_heading level0 row7" >0.19</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col0" class="data row7 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col1" class="data row7 col1" >4416</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col2" class="data row7 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col3" class="data row7 col3" >1093</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col4" class="data row7 col4" >0.32</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col5" class="data row7 col5" >0.37</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col6" class="data row7 col6" >0.31</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col7" class="data row7 col7" >3.29</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row7_col8" class="data row7 col8" >0.35</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row8" class="row_heading level0 row8" >0.21</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col0" class="data row8 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col1" class="data row8 col1" >4095</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col2" class="data row8 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col3" class="data row8 col3" >1020</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col4" class="data row8 col4" >0.28</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col5" class="data row8 col5" >0.36</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col6" class="data row8 col6" >0.36</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col7" class="data row8 col7" >2.39</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row8_col8" class="data row8 col8" >0.4</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row9" class="row_heading level0 row9" >0.23</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col0" class="data row9 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col1" class="data row9 col1" >3804</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col2" class="data row9 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col3" class="data row9 col3" >936</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col4" class="data row9 col4" >0.25</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col5" class="data row9 col5" >0.34</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col6" class="data row9 col6" >0.4</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col7" class="data row9 col7" >1.9</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row9_col8" class="data row9 col8" >0.44</td> 
+    </tr>    <tr> 
+        <th id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074level0_row10" class="row_heading level0 row10" >0.25</th> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col0" class="data row10 col0" >6801</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col1" class="data row10 col1" >3513</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col2" class="data row10 col2" >1469</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col3" class="data row10 col3" >868</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col4" class="data row10 col4" >0.22</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col5" class="data row10 col5" >0.33</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col6" class="data row10 col6" >0.44</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col7" class="data row10 col7" >1.57</td> 
+        <td id="T_943bc0c2_d7c7_11e8_977b_d89ef34a7074row10_col8" class="data row10 col8" >0.48</td> 
+    </tr></tbody> 
+</table> 
+<h3>Breakdown of Alert Times for SIRSdttm on Sepsis Patients</h3>
+<p>The following table further breaks down how many hours in advance this model would have fired for each of the Sepsis, SIRSdttm patients by cutoff.
+'Alerted During/After' is defined as the model either firing as soon as the patient met the SIRSdttm criteria or after. The '4-1 Hours' column
+gives the relative proportion of patients that would have been alerted on 1-4 hours prior to them meeting the SIRSdttm criteria. Each of
+the subsequent columns are defined similarly.</p>
+
+<style  type="text/css" >
+    #T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col0 {
+            background:  lightgreen;
+        }    #T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col1 {
+            background:  lightgreen;
+        }    #T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col2 {
+            background:  lightgreen;
+        }    #T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col3 {
+            background:  lightgreen;
+        }    #T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col4 {
+            background:  lightgreen;
+        }    #T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col5 {
+            background:  lightgreen;
+        }</style>  
+<table id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074" > 
+<thead>    <tr> 
+        <th class="blank level0" ></th> 
+        <th class="col_heading level0 col0" >>24 Hours</th> 
+        <th class="col_heading level0 col1" >24-13 Hours</th> 
+        <th class="col_heading level0 col2" >12-9 Hours</th> 
+        <th class="col_heading level0 col3" >8-5 Hours</th> 
+        <th class="col_heading level0 col4" >4-1 Hours</th> 
+        <th class="col_heading level0 col5" >Alerted After</th> 
+    </tr></thead> 
+<tbody>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row0" class="row_heading level0 row0" >0.05</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row0_col0" class="data row0 col0" >0.18</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row0_col1" class="data row0 col1" >0.07</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row0_col2" class="data row0 col2" >0.04</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row0_col3" class="data row0 col3" >0.08</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row0_col4" class="data row0 col4" >0.35</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row0_col5" class="data row0 col5" >0.27</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row1" class="row_heading level0 row1" >0.07</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row1_col0" class="data row1 col0" >0.16</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row1_col1" class="data row1 col1" >0.06</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row1_col2" class="data row1 col2" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row1_col3" class="data row1 col3" >0.07</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row1_col4" class="data row1 col4" >0.31</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row1_col5" class="data row1 col5" >0.33</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row2" class="row_heading level0 row2" >0.09</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row2_col0" class="data row2 col0" >0.14</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row2_col1" class="data row2 col1" >0.05</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row2_col2" class="data row2 col2" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row2_col3" class="data row2 col3" >0.06</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row2_col4" class="data row2 col4" >0.27</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row2_col5" class="data row2 col5" >0.36</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row3" class="row_heading level0 row3" >0.11</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col0" class="data row3 col0" >0.12</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col1" class="data row3 col1" >0.05</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col2" class="data row3 col2" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col3" class="data row3 col3" >0.06</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col4" class="data row3 col4" >0.25</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row3_col5" class="data row3 col5" >0.38</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row4" class="row_heading level0 row4" >0.13</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row4_col0" class="data row4 col0" >0.1</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row4_col1" class="data row4 col1" >0.04</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row4_col2" class="data row4 col2" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row4_col3" class="data row4 col3" >0.05</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row4_col4" class="data row4 col4" >0.22</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row4_col5" class="data row4 col5" >0.39</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row5" class="row_heading level0 row5" >0.15</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row5_col0" class="data row5 col0" >0.09</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row5_col1" class="data row5 col1" >0.04</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row5_col2" class="data row5 col2" >0.02</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row5_col3" class="data row5 col3" >0.05</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row5_col4" class="data row5 col4" >0.2</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row5_col5" class="data row5 col5" >0.38</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row6" class="row_heading level0 row6" >0.17</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row6_col0" class="data row6 col0" >0.08</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row6_col1" class="data row6 col1" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row6_col2" class="data row6 col2" >0.02</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row6_col3" class="data row6 col3" >0.04</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row6_col4" class="data row6 col4" >0.18</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row6_col5" class="data row6 col5" >0.38</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row7" class="row_heading level0 row7" >0.19</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row7_col0" class="data row7 col0" >0.06</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row7_col1" class="data row7 col1" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row7_col2" class="data row7 col2" >0.02</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row7_col3" class="data row7 col3" >0.04</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row7_col4" class="data row7 col4" >0.16</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row7_col5" class="data row7 col5" >0.37</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row8" class="row_heading level0 row8" >0.21</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row8_col0" class="data row8 col0" >0.05</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row8_col1" class="data row8 col1" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row8_col2" class="data row8 col2" >0.02</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row8_col3" class="data row8 col3" >0.04</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row8_col4" class="data row8 col4" >0.15</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row8_col5" class="data row8 col5" >0.36</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row9" class="row_heading level0 row9" >0.23</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row9_col0" class="data row9 col0" >0.05</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row9_col1" class="data row9 col1" >0.02</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row9_col2" class="data row9 col2" >0.01</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row9_col3" class="data row9 col3" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row9_col4" class="data row9 col4" >0.14</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row9_col5" class="data row9 col5" >0.34</td> 
+    </tr>    <tr> 
+        <th id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074level0_row10" class="row_heading level0 row10" >0.25</th> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row10_col0" class="data row10 col0" >0.04</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row10_col1" class="data row10 col1" >0.02</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row10_col2" class="data row10 col2" >0.01</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row10_col3" class="data row10 col3" >0.03</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row10_col4" class="data row10 col4" >0.12</td> 
+        <td id="T_9444e8a6_d7c7_11e8_bc80_d89ef34a7074row10_col5" class="data row10 col5" >0.33</td> 
+    </tr></tbody> 
+</table> 
+<h3>Concluding Remarks</h3>
+<ol style="margin-left: 20px;">
+  <li>The cutoff used to trigger alerts can vary based on the number of resources at each department. This analysis was meant more to give a general overview of how the model performs on hour-to-hour basis for various departments, and the hospital as a whole.</li>
+  <li>A patient's risk score will be updated hourly. If any of their labs and vitals have changed, this will reflect in their subsequent risk score</li>
+  <li>Our model is able to provide patient specific insight as to why a given person has a high/low risk score. With an alert, we seek to provide the top 10 features that are attributed to a patient's high prediction</li>
+</ol>
+    <HR/>
+    <div class="footer">
+      <p>Published from <a href="markdowns/MetSIRSdttm_24.pmd">markdowns/MetSIRSdttm_24.pmd</a>
+    using <a href="http://mpastell.com/pweave">Pweave</a> 0.30.2
+    on 24-10-2018.<p></div>
+
+            </div>
+        </div>
+    </div>
+  </BODY>
+</HTML>
